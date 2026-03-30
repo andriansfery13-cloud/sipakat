@@ -31,6 +31,19 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
+                            <label for="nip" class="block text-sm font-semibold text-slate-700 mb-1.5">NIP</label>
+                            <input type="text" name="nip" id="nip" value="{{ old('nip', $employee->nip) }}"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent" maxlength="50">
+                        </div>
+                        <div>
+                            <label for="instansi" class="block text-sm font-semibold text-slate-700 mb-1.5">Instansi</label>
+                            <input type="text" name="instansi" id="instansi" value="{{ old('instansi', $employee->instansi) }}"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
                             <label for="ptkp_status" class="block text-sm font-semibold text-slate-700 mb-1.5">Status PTKP <span class="text-red-500">*</span></label>
                             <select name="ptkp_status" id="ptkp_status" required
                                 class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
@@ -49,10 +62,21 @@
                         </div>
                     </div>
 
-                    <div>
-                        <label for="position" class="block text-sm font-semibold text-slate-700 mb-1.5">Jabatan</label>
-                        <input type="text" name="position" id="position" value="{{ old('position', $employee->position) }}"
-                            class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="status_pegawai" class="block text-sm font-semibold text-slate-700 mb-1.5">Jenis Pegawai (PNS/PPPK)</label>
+                            <select name="status_pegawai" id="status_pegawai"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <option value="">-- Pilih Jenis --</option>
+                                <option value="PNS" {{ old('status_pegawai', $employee->status_pegawai) == 'PNS' ? 'selected' : '' }}>PNS</option>
+                                <option value="PPPK" {{ old('status_pegawai', $employee->status_pegawai) == 'PPPK' ? 'selected' : '' }}>PPPK</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="position" class="block text-sm font-semibold text-slate-700 mb-1.5">Jabatan</label>
+                            <input type="text" name="position" id="position" value="{{ old('position', $employee->position) }}"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
                     </div>
                 </div>
 

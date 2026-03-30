@@ -93,6 +93,16 @@
                                 <td class="py-2.5 font-mono text-xs">3201234567890001</td>
                             </tr>
                             <tr>
+                                <td class="py-2.5 font-medium">NIP</td>
+                                <td class="py-2.5"><span class="bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded text-xs">Opsional</span></td>
+                                <td class="py-2.5 font-mono text-xs">199001012020121001</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2.5 font-medium">Instansi</td>
+                                <td class="py-2.5"><span class="bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded text-xs">Opsional</span></td>
+                                <td class="py-2.5">Pemerintah Daerah</td>
+                            </tr>
+                            <tr>
                                 <td class="py-2.5 font-medium">PTKP</td>
                                 <td class="py-2.5"><span class="bg-red-100 text-red-700 font-semibold px-2 py-0.5 rounded text-xs">Wajib</span> Harus TK/0, K/1, dsb</td>
                                 <td class="py-2.5 font-mono text-xs">TK/0</td>
@@ -104,8 +114,13 @@
                             </tr>
                             <tr>
                                 <td class="py-2.5 font-medium">Status</td>
-                                <td class="py-2.5"><span class="bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded text-xs">Opsional</span> Tetap / Tidak Tetap</td>
+                                <td class="py-2.5"><span class="bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded text-xs">Opsional</span> Tetap/Tidak Tetap</td>
                                 <td class="py-2.5">Tetap</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2.5 font-medium">Jenis Pegawai</td>
+                                <td class="py-2.5"><span class="bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded text-xs">Opsional</span> PNS / PPPK / Lainnya</td>
+                                <td class="py-2.5">PNS</td>
                             </tr>
                         </tbody>
                     </table>

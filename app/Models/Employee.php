@@ -14,9 +14,12 @@ class Employee extends Model
         'name',
         'npwp',
         'nik',
+        'nip',
+        'instansi',
         'ptkp_status',
         'position',
         'employee_status',
+        'status_pegawai',
     ];
 
     public function payrolls(): HasMany

@@ -34,6 +34,22 @@
                         </div>
                     </div>
 
+                    <!-- NIP & Instansi -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="nip" class="block text-sm font-semibold text-slate-700 mb-1.5">NIP</label>
+                            <input type="text" name="nip" id="nip" value="{{ old('nip') }}"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                placeholder="Masukkan NIP (jika ada)" maxlength="50">
+                        </div>
+                        <div>
+                            <label for="instansi" class="block text-sm font-semibold text-slate-700 mb-1.5">Instansi</label>
+                            <input type="text" name="instansi" id="instansi" value="{{ old('instansi') }}"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                placeholder="Nama instansi">
+                        </div>
+                    </div>
+
                     <!-- PTKP & Status -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -60,12 +76,23 @@
                         </div>
                     </div>
 
-                    <!-- Jabatan -->
-                    <div>
-                        <label for="position" class="block text-sm font-semibold text-slate-700 mb-1.5">Jabatan</label>
-                        <input type="text" name="position" id="position" value="{{ old('position') }}"
-                            class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                            placeholder="Contoh: Manager, Staff, dll">
+                    <!-- Jenis Pegawai & Jabatan -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="status_pegawai" class="block text-sm font-semibold text-slate-700 mb-1.5">Jenis Pegawai (PNS/PPPK)</label>
+                            <select name="status_pegawai" id="status_pegawai"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <option value="">-- Pilih Jenis --</option>
+                                <option value="PNS" {{ old('status_pegawai') == 'PNS' ? 'selected' : '' }}>PNS</option>
+                                <option value="PPPK" {{ old('status_pegawai') == 'PPPK' ? 'selected' : '' }}>PPPK</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="position" class="block text-sm font-semibold text-slate-700 mb-1.5">Jabatan</label>
+                            <input type="text" name="position" id="position" value="{{ old('position') }}"
+                                class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                placeholder="Contoh: Manager, Staff, dll">
+                        </div>
                     </div>
                 </div>
 
