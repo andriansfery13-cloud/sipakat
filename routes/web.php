@@ -6,6 +6,9 @@ use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SuperadminDashboardController;
+use App\Http\Controllers\Superadmin\KecamatanController as SuperadminKecamatanController;
+use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\XmlController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,10 +16,13 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Dashboard - redirect based on role
+Route::get('/dashboard', function () {
+    if (auth()->user()->isSuperAdmin()) {
+        return redirect()->route('superadmin.dashboard');
+    }
+    return app(DashboardController::class)->index();
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // Profile
@@ -61,6 +67,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/annual', [ReportController::class, 'annual'])->name('reports.annual');
     Route::get('/reports/annual/pdf', [ReportController::class, 'exportAnnualPdf'])->name('reports.annual.pdf');
     Route::get('/reports/annual/excel', [ReportController::class, 'exportAnnualExcel'])->name('reports.annual.excel');
+});
+
+// Superadmin Routes
+Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->name('superadmin.')->group(function () {
+    Route::get('/dashboard', [SuperadminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/kecamatan/{kecamatan}/detail', [SuperadminDashboardController::class, 'detailKecamatan'])->name('kecamatan.detail');
+
+    Route::resource('kecamatans', SuperadminKecamatanController::class)->except(['show']);
+    Route::resource('users', SuperadminUserController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';

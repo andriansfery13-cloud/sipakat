@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class XmlLog extends Model
 {
@@ -12,7 +13,23 @@ class XmlLog extends Model
         'file_name',
         'file_path',
         'record_count',
+        'kecamatan_id',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('kecamatan', function (Builder $builder) {
+            if (auth()->check() && auth()->user()->role === 'admin_kecamatan') {
+                $builder->where('kecamatan_id', auth()->user()->kecamatan_id);
+            }
+        });
+
+        static::creating(function ($log) {
+            if (auth()->check() && auth()->user()->role === 'admin_kecamatan') {
+                $log->kecamatan_id = auth()->user()->kecamatan_id;
+            }
+        });
+    }
 
     public function getDownloadUrlAttribute(): string
     {

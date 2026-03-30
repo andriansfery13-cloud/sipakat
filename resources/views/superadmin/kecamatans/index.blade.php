@@ -1,0 +1,58 @@
+<x-app-layout>
+    <x-slot name="title">Kelola Data Kecamatan</x-slot>
+    <x-slot name="subtitle">Menambah, mengedit, dan menghapus daftar kecamatan (Tenant) di sistem ini.</x-slot>
+
+    <div class="mb-6 flex items-center justify-between animate-fade-in-up">
+        <a href="{{ route('superadmin.kecamatans.create') }}" class="btn-primary inline-flex items-center gap-2 px-4 py-2 text-sm text-white rounded-lg shadow font-medium">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Tambah Kecamatan
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden animate-fade-in-up animate-delay-1">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left data-table">
+                <thead class="bg-slate-50 border-b border-slate-200">
+                    <tr>
+                        <th class="px-6 py-4">No.</th>
+                        <th class="px-6 py-4">Nama Kecamatan</th>
+                        <th class="px-6 py-4">Kode Kecamatan</th>
+                        <th class="px-6 py-4">Alamat</th>
+                        <th class="px-6 py-4 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm">
+                    @forelse($kecamatans as $index => $k)
+                        <tr class="border-b border-slate-100 text-slate-700 hover:bg-slate-50">
+                            <td class="px-6 py-4">{{ $index + 1 }}</td>
+                            <td class="px-6 py-4 font-bold text-slate-800">{{ $k->nama_kecamatan }}</td>
+                            <td class="px-6 py-4 font-medium">{{ $k->kode_kecamatan ?? '-' }}</td>
+                            <td class="px-6 py-4 truncate max-w-xs">{{ $k->alamat ?? '-' }}</td>
+                            <td class="px-6 py-4 text-center space-x-2">
+                                <a href="{{ route('superadmin.kecamatans.edit', $k->id) }}" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors" title="Edit">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                                </a>
+                                <form action="{{ route('superadmin.kecamatans.destroy', $k->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kecamatan ini? Ini akan HANYA menghapus data kecamatan tanpa child, pastikan tabel child sudah didelete cascade jika diinginkan.')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors" title="Hapus">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-6 py-10 text-center text-slate-500">
+                                <div class="flex flex-col items-center justify-center">
+                                    <svg class="w-12 h-12 text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+                                    Belum ada data kecamatan.
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</x-app-layout>

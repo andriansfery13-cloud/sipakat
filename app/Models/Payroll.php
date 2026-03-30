@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Payroll extends Model
 {
@@ -19,6 +20,7 @@ class Payroll extends Model
         'bonus',
         'total_income',
         'pph21',
+        'kecamatan_id',
     ];
 
     protected $casts = [
@@ -28,6 +30,21 @@ class Payroll extends Model
         'total_income' => 'decimal:2',
         'pph21' => 'decimal:2',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('kecamatan', function (Builder $builder) {
+            if (auth()->check() && auth()->user()->role === 'admin_kecamatan') {
+                $builder->where('kecamatan_id', auth()->user()->kecamatan_id);
+            }
+        });
+
+        static::creating(function ($payroll) {
+            if (auth()->check() && auth()->user()->role === 'admin_kecamatan') {
+                $payroll->kecamatan_id = auth()->user()->kecamatan_id;
+            }
+        });
+    }
 
     public function employee(): BelongsTo
     {
@@ -47,11 +64,11 @@ class Payroll extends Model
 
     public function getFormattedTotalIncomeAttribute(): string
     {
-        return 'Rp ' . number_format($this->total_income, 0, ',', '.');
+        return 'Rp ' . number_format((float) $this->total_income, 0, ',', '.');
     }
 
     public function getFormattedPph21Attribute(): string
     {
-        return 'Rp ' . number_format($this->pph21, 0, ',', '.');
+        return 'Rp ' . number_format((float) $this->pph21, 0, ',', '.');
     }
 }

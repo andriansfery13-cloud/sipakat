@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class Employee extends Model
 {
     use HasFactory;
@@ -20,7 +23,28 @@ class Employee extends Model
         'position',
         'employee_status',
         'status_pegawai',
+        'kecamatan_id',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('kecamatan', function (Builder $builder) {
+            if (auth()->check() && auth()->user()->role === 'admin_kecamatan') {
+                $builder->where('kecamatan_id', auth()->user()->kecamatan_id);
+            }
+        });
+
+        static::creating(function ($employee) {
+            if (auth()->check() && auth()->user()->role === 'admin_kecamatan') {
+                $employee->kecamatan_id = auth()->user()->kecamatan_id;
+            }
+        });
+    }
+
+    public function kecamatan(): BelongsTo
+    {
+        return $this->belongsTo(Kecamatan::class);
+    }
 
     public function payrolls(): HasMany
     {
